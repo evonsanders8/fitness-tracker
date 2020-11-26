@@ -6,6 +6,7 @@ import { getToken, clearToken, fetchAPI, BASE_URL } from "../api";
 // import {Auth, MyRoutines} from "./components"
 import Auth from "../components/Auth";
 import MyRoutines from "../components/MyRoutines";
+import Activities from '../components/Activities';
 
 import "./App.css";
 
@@ -58,7 +59,8 @@ const App = () => {
 
           {/* <Link to="/activities"><ActiviteisNav></Link> */}
         </header>
-        <h1>Hello World</h1>
+        <Activities
+        masterActivitiesList={masterActivitiesList} />
         {/* <Route path="/activities">
       <Activites />
       </Route> */}
