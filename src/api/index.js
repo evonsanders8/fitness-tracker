@@ -31,9 +31,18 @@ export const clearToken = () => {
 const setToken = (token) => {
   localStorage.setItem("auth-token", token);
 };
+export async function sendUserRegistration(username, password){
+    const response = await fetchAPI('https://fitnesstrac-kr.herokuapp.com/api/users/register',
+    "POST", {
+        username: username,
+        password: password
 
+    })
+
+}
 export const registerUser = async (username, password) => {
-  const response = await fetchAPI(`${BASE_URL}/users/register`, {
+    const url = 'https://fitnesstrac-kr.herokuapp.com/api/users/register'
+  const response = await fetchAPI(`${url}/users/register`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

@@ -6,6 +6,8 @@ import { getToken, clearToken, fetchAPI, BASE_URL } from "../api";
 // import {Auth, MyRoutines} from "./components"
 import Auth from "../components/Auth";
 import MyRoutines from "../components/MyRoutines";
+import Activities from '../components/Activities';
+import Routines from "../components/Routines";
 
 import "./App.css";
 
@@ -58,13 +60,15 @@ const App = () => {
 
           {/* <Link to="/activities"><ActiviteisNav></Link> */}
         </header>
-        <h1>Hello World</h1>
+        <Activities
+        masterActivitiesList={masterActivitiesList} />
         {/* <Route path="/activities">
-      <Activites />
-      </Route> */}
-        <Route exact path="/myroutines">
+       <Activites />
+       </Route> */}
+       <Routines masterRoutinesList= {masterRoutinesList} />
+        {/* <Route exact path="/myroutines">
           <MyRoutines />
-        </Route>
+        </Route> */}
       </div>
     </Router>
   );
