@@ -31,57 +31,47 @@ export const clearToken = () => {
 const setToken = (token) => {
   localStorage.setItem("auth-token", token);
 };
+function buildHeaders() {
+    let base = {
+      'Content-Type': 'application/json',
+    }
+    if (getToken()) {
+      base['Authorization'] = `Bearer ${getToken()}`
+    }
+    return base
+  }
 
-export const registerUser = async (username, password) => {
-  const response = await fetchAPI(`${BASE_URL}/users/register`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      user: {
+
+
+export const auth = async (username, password, isNew = false) => {
+    const url = `${BASE_URL}/users` + (isNew ? '/register' : '/login')
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: buildHeaders(),
+      body: JSON.stringify({
         username: username,
         password: password,
-      },
-    }),
-  });
-
-  const { error, data } = await response.json();
-
-  if (error) {
-    throw Error(error.message);
+      }),
+    })
+    const { error, user, token } = await response.json()
+    if (error) {
+      throw Error(error.message)
+    }
+    if (token) {
+      setToken(token)
+    }
+    //return data
+  }
+  export const hitAPI = async (method, endpoint, bodyObj) => {
+    const payload = {
+      method: method,
+      headers: buildHeaders(),
+    }
+    if (bodyObj) {
+      payload.body = JSON.stringify(bodyObj)
+    }
+    const response = await fetch(`${BASE_URL}${endpoint}`, payload)
+    const data = await response.json()
+    return data
   }
 
-  if (data && data.token) {
-    setToken(data.token);
-  }
-
-  return data;
-};
-
-export const loginUser = async (username, password) => {
-  const response = await fetchAPI(`${BASE_URL}/users/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      user: {
-        username: username,
-        password: password,
-      },
-    }),
-  });
-
-  const { error, data } = await response.json();
-
-  if (error) {
-    throw Error(error.message);
-  }
-
-  if (data && data.token) {
-    setToken(data.token);
-  }
-
-  return data;
-};
