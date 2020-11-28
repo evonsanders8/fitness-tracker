@@ -31,66 +31,111 @@ export const clearToken = () => {
 const setToken = (token) => {
   localStorage.setItem("auth-token", token);
 };
-export async function sendUserRegistration(username, password){
-    const response = await fetchAPI('https://fitnesstrac-kr.herokuapp.com/api/users/register',
-    "POST", {
-        username: username,
-        password: password
+function buildHeaders() {
+    let base = {
+      'Content-Type': 'application/json',
+    }
+    if (getToken()) {
+      base['Authorization'] = `Bearer ${getToken()}`
+    }
+    return base
+  }
 
+export const auth = async (username, password, isNew = false) => {
+    const url = `${BASE_URL}/users` + (isNew ? '/register' : '/login')
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: buildHeaders(),
+      body: JSON.stringify({
+        username: username,
+        password: password,
+      }),
     })
-
+    const { error, user, token } = await response.json()
+    if (error) {
+      throw Error(error.message)
+    }
+    if (token) {
+      setToken(token)
+    }
+    //return data
+  }
+  export const hitAPI = async (method, endpoint, bodyObj) => {
+    const payload = {
+      method: method,
+      headers: buildHeaders(),
+    }
+    if (bodyObj) {
+      payload.body = JSON.stringify(bodyObj)
+    }
+    const response = await fetch(`${BASE_URL}${endpoint}`, payload)
+    const data = await response.json()
+    return data
+  }
+export const getUserId = async () =>{
+    
 }
-export const registerUser = async (username, password) => {
-    const url = 'https://fitnesstrac-kr.herokuapp.com/api/users/register'
-  const response = await fetchAPI(`${url}/users/register`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      user: {
-        username: username,
-        password: password,
-      },
-    }),
-  });
 
-  const { error, data } = await response.json();
+// // export async function sendUserRegistration(username, password){
+// //     const response = await fetchAPI('https://fitnesstrac-kr.herokuapp.com/api/users/register',
+// //     "POST", {
+// //         username: username,
+// //         password: password
 
-  if (error) {
-    throw Error(error.message);
-  }
+// //     })
 
-  if (data && data.token) {
-    setToken(data.token);
-  }
+// // }
+// export const registerUser = async (username, password) => {
+//     const url = 'https://fitnesstrac-kr.herokuapp.com/api/users/register'
+//   const response = await fetchAPI(`${url}/users/register`, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({
+//       user: {
+//         username: username,
+//         password: password,
+//       },
+//     }),
+//   });
 
-  return data;
-};
+//   const { error, data } = await response.json();
 
-export const loginUser = async (username, password) => {
-  const response = await fetchAPI(`${BASE_URL}/users/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      user: {
-        username: username,
-        password: password,
-      },
-    }),
-  });
+//   if (error) {
+//     throw Error(error.message);
+//   }
 
-  const { error, data } = await response.json();
+//   if (data && data.token) {
+//     setToken(data.token);
+//   }
 
-  if (error) {
-    throw Error(error.message);
-  }
+//   return data;
+// };
 
-  if (data && data.token) {
-    setToken(data.token);
-  }
+// export const loginUser = async (username, password) => {
+//   const response = await fetchAPI(`${BASE_URL}/users/login`, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({
+//       user: {
+//         username: username,
+//         password: password,
+//       },
+//     }),
+//   });
 
-  return data;
-};
+//   const { error, data } = await response.json();
+
+//   if (error) {
+//     throw Error(error.message);
+//   }
+
+//   if (data && data.token) {
+//     setToken(data.token);
+//   }
+
+//   return data;
+// };

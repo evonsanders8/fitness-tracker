@@ -1,35 +1,58 @@
 import React, { useState, useEffect } from "react";
-
+import ReactDOM from 'react-dom'
 import { BrowserRouter as Router, Link, Switch, Route } from "react-router-dom";
-import { getToken, clearToken, fetchAPI, BASE_URL } from "../api";
+import { getToken, clearToken, hitAPI  } from "../api";
+import {AppBar, Toolbar} from '@material-ui/core'
 
 // import {Auth, MyRoutines} from "./components"
-import Auth from "../components/Auth";
+import Auth from "./Auth";
 import MyRoutines from "../components/MyRoutines";
 import Activities from '../components/Activities';
 
 import "./App.css";
 
+
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(!!getToken());
+  const [getUserId, setUserId] = useState('')
   const [masterRoutinesList, setMasterRoutineList] = useState([]);
   const [masterActivitiesList, setMasterActivitiesList] = useState([]);
 
+
+
   // fetch all routines for all users to view:
   useEffect(() => {
-    const url = "http://fitnesstrac-kr.herokuapp.com/api";
-    fetchAPI(`${url}/routines`, "GET")
+    //const url = "http://fitnesstrac-kr.herokuapp.com/api";
+    if (!isLoggedIn) {
+      setMasterRoutineList([]);
+      return;
+    }
+    
+      hitAPI("GET", "/users/me")
       .then((data) => {
-        const routines = data;
-        setMasterRoutineList(routines);
+        setUserId(data.username)
+        console.log("username", data.username)
       })
-      .catch((err) => console.error(err));
-  }, []);
+      .catch((err) => console.error(err))
+    },[isLoggedIn]);
+    
+  //   hitAPI("GET", "/users/albert/routines")
+  //     .then((data) => {
+  //       const {routines} = data;
+  //       data.map((rout) => {
+  //         console.log(rout.creatorName)
+  //         return setMasterRoutineList(rout);
+  //       })
+  //     })
+  //     .catch((err) => console.error(err));
+  // }, []);
 
+
+   
   // fetch all activities for all users to view:
   useEffect(() => {
     const url = "http://fitnesstrac-kr.herokuapp.com/api";
-    fetchAPI(`${url}/activities`, "GET")
+    hitAPI(`${url}/activities`, "GET")
       .then((data) => {
         const activities = data;
         setMasterActivitiesList(activities);
@@ -37,36 +60,45 @@ const App = () => {
       .catch((err) => console.error(err));
   }, []);
 
-  /*
+  
   useEffect(() => {
-    fetchAPI('http://fitnesstrac-kr.herokuapp.com/api/users/albert/routines','GET')
+    hitAPI('http://fitnesstrac-kr.herokuapp.com/api/users/albert/routines','GET')
       .then((data) => {
         console.log('first data', data)
         const { routineList } = data
-        setRoutineList(routineList)
+        setMasterRoutineList(routineList)
       })
       .catch(console.error)
   }, [isLoggedIn])
-*/
-  console.log("masterRoutinesList:", masterRoutinesList);
-  console.log("masterActivitiesList:", masterActivitiesList);
+
+  // console.log("masterRoutinesList:", masterRoutinesList);
+  // console.log("masterActivitiesList:", masterActivitiesList);
 
   return (
     <Router>
-      <div className="app">
-        <header className="App-header">
+      <div className="app" >
+      <AppBar position="absolute" style={{ background: "#344955" }}>
+        <Toolbar> Fitness Tracker</Toolbar>
+      </AppBar>
+      
+        <div>
+       
+        {isLoggedIn ? (
+          <>
+            <h1>Thanks for logging in!</h1> 
+            <button
+              onClick={() => {
+                clearToken();
+                setIsLoggedIn(false);
+              }}
+            >
+              LOG OUT
+            </button>
+          </>
+        ) : (
           <Auth setIsLoggedIn={setIsLoggedIn} />
-
-          {/* <Link to="/activities"><ActiviteisNav></Link> */}
-        </header>
-        <Activities
-        masterActivitiesList={masterActivitiesList} />
-        {/* <Route path="/activities">
-      <Activites />
-      </Route> */}
-        <Route exact path="/myroutines">
-          <MyRoutines />
-        </Route>
+        )}
+        </div>
       </div>
     </Router>
   );
