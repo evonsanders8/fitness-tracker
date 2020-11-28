@@ -8,6 +8,7 @@ import {AppBar, Toolbar} from '@material-ui/core'
 import Auth from "./Auth";
 import MyRoutines from "../components/MyRoutines";
 import Activities from '../components/Activities';
+import NewActivityForm from "../components/NewActivityForm";
 
 import Routines from "../components/Routines";
 
@@ -104,6 +105,10 @@ const App = () => {
           <Auth setIsLoggedIn={setIsLoggedIn} />
 
 
+        <NewActivityForm 
+        />
+
+
       
         <Activities masterActivitiesList={masterActivitiesList} />
       
@@ -116,6 +121,7 @@ const App = () => {
 
         </div>
      </div>
+
     </Router>
     );
     };
