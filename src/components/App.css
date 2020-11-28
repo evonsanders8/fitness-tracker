@@ -1,7 +1,14 @@
-.App {
+.app {
   text-align: center;
-}
+ background-image: url("https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=668&q=80");
+ position: fixed;
+ min-width: 100%;
+ min-height: 100%;
+ background-size: cover;
+ background-position: center;
+ overflow: scroll;
 
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -13,23 +20,37 @@
   }
 }
 
-.App-header {
-  min-height: 100vh;
+
+body {
+  
+  background-image: linear-gradient(to right, rgba(35,48,52,100), #066f90);
+    
+}
+.loginForm {
+
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-}
 
-.App-link {
+  flex-wrap: wrap;
 }
+.loginForm Button{
+    margin: 10px
+  }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+/* .nav{
+  display: flex;
+  flex-direction: column;
+  justify-content: right;
+  align-content: center;
+  flex-wrap: wrap;
+  top: 100px;
+  
+} */
+/* .nav li{
+  display: flex;
+  flex-direction: column;
+  justify-content: right;
+  align-content: center;
+  flex-wrap: wrap;
+  height: 45px;
+} */
