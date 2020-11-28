@@ -31,6 +31,16 @@ export const clearToken = () => {
 const setToken = (token) => {
   localStorage.setItem("auth-token", token);
 };
+function buildHeaders() {
+    let base = {
+      'Content-Type': 'application/json',
+    }
+    if (getToken()) {
+      base['Authorization'] = `Bearer ${getToken()}`
+    }
+    return base
+  }
+
 
 
 export const auth = async (username, password, isNew = false) => {
@@ -64,70 +74,4 @@ export const auth = async (username, password, isNew = false) => {
     const data = await response.json()
     return data
   }
-export const getUserId = async () =>{
-    
-}
 
-// // export async function sendUserRegistration(username, password){
-// //     const response = await fetchAPI('https://fitnesstrac-kr.herokuapp.com/api/users/register',
-// //     "POST", {
-// //         username: username,
-// //         password: password
-
-// //     })
-
-// // }
-// export const registerUser = async (username, password) => {
-//     const url = 'https://fitnesstrac-kr.herokuapp.com/api/users/register'
-//   const response = await fetchAPI(`${url}/users/register`, {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify({
-//       user: {
-//         username: username,
-//         password: password,
-//       },
-//     }),
-//   });
-
-//   const { error, data } = await response.json();
-
-//   if (error) {
-//     throw Error(error.message);
-//   }
-
-//   if (data && data.token) {
-//     setToken(data.token);
-//   }
-
-//   return data;
-// };
-
-// export const loginUser = async (username, password) => {
-//   const response = await fetchAPI(`${BASE_URL}/users/login`, {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify({
-//       user: {
-//         username: username,
-//         password: password,
-//       },
-//     }),
-//   });
-
-//   const { error, data } = await response.json();
-
-//   if (error) {
-//     throw Error(error.message);
-//   }
-
-//   if (data && data.token) {
-//     setToken(data.token);
-//   }
-
-//   return data;
-// };

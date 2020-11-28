@@ -79,16 +79,16 @@ const App = () => {
   // console.log("masterActivitiesList:", masterActivitiesList);
 
   return (
-    <Router>
+  <Router>
       <div className="app" >
       <AppBar position="absolute" style={{ background: "#344955" }}>
         <Toolbar> Fitness Tracker</Toolbar>
       </AppBar>
-      
+     
         <div>
        
         {isLoggedIn ? (
-          <>
+        <div>
             <h1>Thanks for logging in!</h1> 
             <button
               onClick={() => {
@@ -98,29 +98,26 @@ const App = () => {
             >
               LOG OUT
             </button>
-          </>
-        ) : (
+         </div>
+        ):(
+          <div>
           <Auth setIsLoggedIn={setIsLoggedIn} />
 
 
-          {/* <Link to="/activities"><ActiviteisNav></Link> */}
-        </header>
-        <Activities
-        masterActivitiesList={masterActivitiesList} />
-        {/* <Route path="/activities">
-       <Activites />
-       </Route> */}
+      
+        <Activities masterActivitiesList={masterActivitiesList} />
+      
        <Routines masterRoutinesList= {masterRoutinesList} />
-        {/* <Route exact path="/myroutines">
-          <MyRoutines />
-        </Route> */}
-
+       
+       </div>
+      
         )}
-        </div>
+  
 
-      </div>
+        </div>
+     </div>
     </Router>
-  );
-};
+    );
+    };
 
 export default App;
