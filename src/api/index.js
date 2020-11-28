@@ -31,15 +31,7 @@ export const clearToken = () => {
 const setToken = (token) => {
   localStorage.setItem("auth-token", token);
 };
-function buildHeaders() {
-    let base = {
-      'Content-Type': 'application/json',
-    }
-    if (getToken()) {
-      base['Authorization'] = `Bearer ${getToken()}`
-    }
-    return base
-  }
+
 
 export const auth = async (username, password, isNew = false) => {
     const url = `${BASE_URL}/users` + (isNew ? '/register' : '/login')

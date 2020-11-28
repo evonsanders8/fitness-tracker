@@ -4,8 +4,10 @@ import { createMuiTheme } from '@material-ui/core/styles'
 //import TextField from '@material-ui/core/TextField'
 import {Container} from "@material-ui/core"
 
+
 import { auth } from "../api";
 import { TextField } from "@material-ui/core";
+
 
 const Auth = (props) => {
   const { setIsLoggedIn } = props;
@@ -39,7 +41,10 @@ const Auth = (props) => {
       color="primary"
         onClick={async (event) => {
           try {
+
+
             const result = await auth(username, password, true);
+
             setIsLoggedIn(true);
           } catch (error) {
             setErrorMessage(error.message);

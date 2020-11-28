@@ -9,6 +9,10 @@ import Auth from "./Auth";
 import MyRoutines from "../components/MyRoutines";
 import Activities from '../components/Activities';
 
+import Routines from "../components/Routines";
+
+
+
 import "./App.css";
 
 
@@ -97,8 +101,23 @@ const App = () => {
           </>
         ) : (
           <Auth setIsLoggedIn={setIsLoggedIn} />
+
+
+          {/* <Link to="/activities"><ActiviteisNav></Link> */}
+        </header>
+        <Activities
+        masterActivitiesList={masterActivitiesList} />
+        {/* <Route path="/activities">
+       <Activites />
+       </Route> */}
+       <Routines masterRoutinesList= {masterRoutinesList} />
+        {/* <Route exact path="/myroutines">
+          <MyRoutines />
+        </Route> */}
+
         )}
         </div>
+
       </div>
     </Router>
   );
