@@ -56,8 +56,8 @@ const App = () => {
    
   // fetch all activities for all users to view:
   useEffect(() => {
-    const url = "http://fitnesstrac-kr.herokuapp.com/api";
-    hitAPI(`${url}/activities`, "GET")
+    //const url = "http://fitnesstrac-kr.herokuapp.com/api";
+    hitAPI("GET", "/activities")
       .then((data) => {
         const activities = data;
         setMasterActivitiesList(activities);
@@ -66,15 +66,15 @@ const App = () => {
   }, []);
 
   
-  useEffect(() => {
-    hitAPI('http://fitnesstrac-kr.herokuapp.com/api/users/albert/routines','GET')
-      .then((data) => {
-        console.log('first data', data)
-        const { routineList } = data
-        setMasterRoutineList(routineList)
-      })
-      .catch(console.error)
-  }, [isLoggedIn])
+  // useEffect(() => {
+  //   hitAPI("GET", "/routines")
+  //     .then((data) => {
+  //       console.log('rotutineList', data)
+  //       const { routineList } = data
+  //       setMasterRoutineList(routineList)
+  //     })
+  //     .catch(console.error)
+  // }, [isLoggedIn])
 
   // console.log("masterRoutinesList:", masterRoutinesList);
   // console.log("masterActivitiesList:", masterActivitiesList);

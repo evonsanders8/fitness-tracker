@@ -27,7 +27,7 @@ body {
     
 }
 .loginForm {
-
+  top: 100px;
   display: flex;
   flex-direction: column;
 
@@ -37,20 +37,19 @@ body {
     margin: 10px
   }
 
-/* .nav{
+.nav{
   display: flex;
   flex-direction: column;
   justify-content: right;
   align-content: center;
   flex-wrap: wrap;
-  top: 100px;
   
-} */
-/* .nav li{
+}
+.nav li{
   display: flex;
   flex-direction: column;
   justify-content: right;
   align-content: center;
   flex-wrap: wrap;
   height: 45px;
-} */
+}
